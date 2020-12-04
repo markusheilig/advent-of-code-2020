@@ -3,16 +3,18 @@ import scala.util.Using
 
 object Day02 extends App {
 
+  val linePattern = "(\\d+)-(\\d+) (\\w): (\\w+)".r
+
   object part1 {
     def isValidPassword(line: String): Boolean = {
-      val min :: max :: char :: password :: Nil = line.split("-| |: ").toList
+      val linePattern(min, max, char, password) = line
       (min.toInt to max.toInt) contains password.count(_ == char.head)
     }
   }
 
   object part2 {
     def isValidPassword(line: String): Boolean = {
-      val pos1 :: pos2 :: char :: password :: Nil = line.split("-| |: ").toList
+      val linePattern(pos1, pos2, char, password) = line
       password(pos1.toInt - 1) == char.head ^ password(pos2.toInt - 1) == char.head
     }
   }
