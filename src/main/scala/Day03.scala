@@ -23,4 +23,10 @@ object Day03 extends App {
 
   val solutionPart1 = countTrees(lines, 3, 1)
   require(solutionPart1 == 272, s"part 1: expected solution 272, got $solutionPart1")
+
+  val solutionPart2 = {
+    val slopes = Seq((1, 1), (3, 1), (5, 1), (7, 1), (1, 2))
+    slopes.map { case (right, down) => countTrees(lines, right, down).toLong }.product
+  }
+  require(solutionPart2 == 3898725600L, s"part 2: expected solution 3898725600, got $solutionPart2")
 }
