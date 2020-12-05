@@ -46,8 +46,8 @@ object Day04 extends App {
   val passports: List[Passport] = parsePassports(input)
 
   val solutionPart1 = passports.count(part1.isPassportValid)
-  require(solutionPart1 == 250, s"part 1: expected solution 250, got $solutionPart1")
+  assert(solutionPart1 == 250, s"part 1: expected solution 250, got $solutionPart1")
 
   val solutionPart2 = passports.count(part2.isPassportValid)
-  require(solutionPart2 == 158, s"part 2: expected solution 158, got $solutionPart2")
+  assert(solutionPart2 == 158, s"part 2: expected solution 158, got $solutionPart2")
 }
