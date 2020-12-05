@@ -31,11 +31,11 @@ object Day04 extends App {
       validate("byr", isBetween(1920, 2002)) &&
         validate("iyr", isBetween(2010, 2020)) &&
         validate("eyr", isBetween(2020, 2030)) &&
-        passport.get("hgt").exists {
+        validate("hgt", {
           case s"${cm}cm" => isBetween(150, 193)(cm)
           case s"${in}in" => isBetween(59, 76)(in)
           case _          => false
-        } &&
+        }) &&
         validate("hcl", "#[0-9a-f]{6}".r.matches) &&
         validate("ecl", "amb|blu|brn|gry|grn|hzl|oth".r.matches) &&
         validate("pid", "[0-9]{9}".r.matches)
