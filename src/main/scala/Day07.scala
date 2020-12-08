@@ -20,7 +20,7 @@ object Day07 extends App {
     }
     private def lines: Parser[Bags] = phrase(rep(line)) ^^ { bags => bags.reduce(_ ++ _) }
 
-    def parseBaggageCount(input: String): Try[Bags] =
+    def parseBags(input: String): Try[Bags] =
       parse(lines, input) match {
         case Success(result, _) => scala.util.Success(result)
         case NoSuccess(error, _) => scala.util.Failure(new ParserError(error))
@@ -43,7 +43,7 @@ object Day07 extends App {
 
   val bags = for {
     input <- Using(Source.fromURL(getClass.getResource("input-day07.txt")))(_.mkString)
-    bags <- BaggageParser.parseBaggageCount(input)
+    bags <- BaggageParser.parseBags(input)
   } yield bags
 
   val solutionPart1 = countContainingBags(bags.get, "shiny gold")
