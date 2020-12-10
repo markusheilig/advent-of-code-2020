@@ -4,14 +4,16 @@ import scala.util.Using
 
 object Day09 extends App {
 
-  def findInvalidNumber(numbers: List[Long], preambleLength: Int): Long = {
-    numbers.drop(preambleLength).zipWithIndex.find { case (number, index) =>
-      val previousNumbers = numbers.slice(index, index + preambleLength)
-      !previousNumbers.combinations(2).exists(pair => pair.sum == number)
-    }.map(_._1).get
+  def findInvalidNumber(numbers: Seq[Long], preambleLength: Int): Long = {
+    numbers.drop(preambleLength).zipWithIndex.collectFirst {
+      case (number, index) if {
+        val previousNumbers = numbers.slice(index, index + preambleLength)
+        !previousNumbers.combinations(2).exists(_.sum == number)
+      } => number
+    }.get
   }
 
-  def findSummingUp(numbers: List[Long], solution: Long): List[Long] = {
+  def findSummingUp(numbers: Seq[Long], solution: Long): Seq[Long] = {
     @tailrec
     def sum(from: Int, to: Int, acc: Long): (Int, Int) = {
       if (acc == solution) (from, to)
@@ -22,7 +24,7 @@ object Day09 extends App {
     numbers.slice(from, to)
   }
 
-  val numbers = Using(Source.fromURL(getClass.getResource("input-day09.txt")))(_.mkString).get.split("\\n").map(_.toLong).toList
+  val numbers = Using(Source.fromURL(getClass.getResource("input-day09.txt")))(_.mkString).get.split("\\n").map(_.toLong).toVector
 
   val preambleLength = 25
   val solutionPart1 = findInvalidNumber(numbers, preambleLength)
